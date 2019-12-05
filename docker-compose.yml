@@ -1,0 +1,24 @@
+version: '3'
+services:
+  kibana-get-template:
+    build: .
+    image: migrate-kibana:latest
+    volumes:
+      - $HOME/.aws:/root/.aws
+      - $PWD:/app
+    environment:
+      AWS_PROFILE: $AWS_PROFILE
+      AWS_REGION: $AWS_REGION
+      ES_DOMAIN: $ES_DOMAIN
+  provision-from-template:
+    image: migrate-kibana:latest
+    command: ["bash", "-c", "sleep 5 && python provisioner.py"]
+    volumes:
+      - $HOME/.aws:/root/.aws
+      - $PWD:/app
+    environment:
+      AWS_PROFILE: $AWS_PROFILE
+      AWS_REGION: $AWS_REGION
+      ES_DOMAIN: $ES_DOMAIN_TO_PROVISION
+    depends_on:
+      - kibana-get-template

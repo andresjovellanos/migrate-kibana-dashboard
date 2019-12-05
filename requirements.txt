@@ -1,0 +1,5 @@
+aws_requests_auth==0.4.1
+elasticsearch==6.0.0
+requests>=2.0.0,<3.0.0
+boto3
+certifi
